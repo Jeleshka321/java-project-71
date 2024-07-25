@@ -10,16 +10,15 @@ import java.util.Map;
 
 public class StyleFormat {
     // transforms the result into the required format
-    public static String format(String format, List<Map<String, Object>> difference)
+    public static String format( List<Map<String, Object>> compareResult, String format)
             throws JsonProcessingException {
 
-        String result = switch (format) {
-            case "stylish" -> StylishFormatter.format(difference);
-            case "plain" -> PlainFormatter.format(difference);
-            case "json" -> JsonFormatter.format(difference);
+        return switch (format) {
+            case "stylish" -> StylishFormatter.format(compareResult);
+            case "plain" -> PlainFormatter.format(compareResult);
+            case "json" -> JsonFormatter.format(compareResult);
             default -> throw new RuntimeException("Unknown format of output");
         };
-
-        return result;
     }
+
 }

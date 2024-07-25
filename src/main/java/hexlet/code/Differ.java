@@ -20,8 +20,8 @@ public class Differ {
         Map<String,Object> file1 = Parser.parse(content1, fileFormat1);
         Map<String,Object> file2 = Parser.parse(content2, fileFormat2);
 
-        List<Map<String,Object>> compareResult = Compactor.compare(file1,file2);
-        return StyleFormat.format(compareResult);
+        List<Map<String,Object>> compareResult = Comparator.compare(file1,file2);
+        return StyleFormat.format(compareResult, format);
     }
     private static String readFile(String filePath) throws Exception  {
         Path path = Paths.get(filePath).toAbsolutePath().normalize();

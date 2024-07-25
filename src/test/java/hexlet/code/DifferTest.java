@@ -30,15 +30,15 @@ public class DifferTest {
     @Test
     public void testGenerateNestedJsonFilesDefaultFormat() throws Exception {
         assertEquals(stylishCompareNestedFileContent,
-                Differ.generate("src/test/resources/nestedfile1.json",
-                        "src/test/resources/nestedfile2.json"));
+                Differ.generate("src/test/resources/file1.json",
+                        "src/test/resources/file2.json", "json"));
     }
 
     @Test
     public void testGenerateNestedYamlFilesDefaultFormat() throws Exception {
         assertEquals(stylishCompareNestedFileContent,
                 Differ.generate("src/test/resources/nestedfile1.yaml",
-                        "src/test/resources/nestedfile2.yaml"));
+                        "src/test/resources/nestedfile2.yaml","plain"));
     }
 
     @Test
