@@ -17,7 +17,7 @@ public class StyleFormat {
             case "stylish" -> StylishFormatter.format(compareResult);
             case "plain" -> PlainFormatter.format(compareResult);
             case "json" -> JsonFormatter.format(compareResult);
-            default -> throw new RuntimeException("Unknown format of output");
+            default -> StylishFormatter.format(compareResult);
         };
     }
 
