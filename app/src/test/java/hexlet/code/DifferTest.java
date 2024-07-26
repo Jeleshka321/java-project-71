@@ -1,95 +1,78 @@
 package hexlet.code;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import static java.nio.file.Files.readString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
-
-    private static Path pathToStylishNestedResultFile = pathNormaliser(
-            "src/test/resources/nestedstylishresult.txt");
-    private static String stylishCompareNestedFileContent;
-    private static Path pathToPlainNestedResultFile = pathNormaliser(
-            "src/test/resources/nestedplainresult.txt");
-    private static String plainCompareNestedFileContent;
-    private static Path pathToJsonNestedResultFile = pathNormaliser(
-            "src/test/resources/newjsonresult.txt");
-    private static String asJsonCompareNestedFileContent;
-
-    @BeforeAll
-    public static void fileReader() throws Exception {
-        stylishCompareNestedFileContent = readString(pathToStylishNestedResultFile);
-        plainCompareNestedFileContent = readString(pathToPlainNestedResultFile);
-        asJsonCompareNestedFileContent = readString(pathToJsonNestedResultFile);
+    public static String fileToString(String filePathString) throws IOException {
+        Path filePath = Paths.get(filePathString);
+        return Files.readString(filePath).trim();
     }
 
     @Test
-    public void testGenerateNestedJsonFilesDefaultFormat() throws Exception {
-        assertEquals(stylishCompareNestedFileContent,
-                Differ.generate("src/test/resources/file1.json",
-                        "src/test/resources/file2.json", "json"));
+    public void testJsonCompareEmpty() throws Exception {
+        String actual = Differ.generate("./src/test/resources/file1.json", "./src/test/resources/file2.json");
+        String expected = fileToString("./src/test/resources/fixtures/resultTestStylish.txt");
+        assertEquals(actual, expected);
     }
 
     @Test
-    public void testGenerateNestedYamlFilesDefaultFormat() throws Exception {
-        assertEquals(stylishCompareNestedFileContent,
-                Differ.generate("src/test/resources/nestedfile1.yaml",
-                        "src/test/resources/nestedfile2.yaml", "plain"));
+    public void testJsonCompareStylish() throws Exception {
+        String actual = Differ.generate("./src/test/resources/file1.json", "./src/test/resources/file2.json",
+                "stylish");
+        String expected = fileToString("./src/test/resources/fixtures/resultTestStylish.txt");
+        assertEquals(actual, expected);
     }
 
     @Test
-    public void testGenerateNestedJsonStylish() throws Exception {
-        assertEquals(stylishCompareNestedFileContent,
-                Differ.generate("src/test/resources/nestedfile1.json",
-                        "src/test/resources/nestedfile2.json",
-                        "stylish"));
+    public void testJsonComparePlain() throws Exception {
+        String actual = Differ.generate("./src/test/resources/file1.json",
+                "./src/test/resources/file2.json", "plain");
+        String expected = fileToString("./src/test/resources/fixtures/resultTestPlain.txt");
+        assertEquals(actual, expected);
     }
 
     @Test
-    public void testGenerateNestedJsonPlain() throws Exception {
-        assertEquals(plainCompareNestedFileContent,
-                Differ.generate("src/test/resources/nestedfile1.json",
-                        "src/test/resources/nestedfile2.json",
-                        "plain"));
+    public void testJsonCompareJson() throws Exception {
+        String actual = Differ.generate("./src/test/resources/file1.json",
+                "./src/test/resources/file2.json", "json");
+        String expected = fileToString("./src/test/resources/fixtures/resultTestJson.txt");
+        assertEquals(actual, expected);
     }
 
     @Test
-    public void testGenerateNestedJsonAsJson() throws Exception {
-        assertEquals(asJsonCompareNestedFileContent,
-                Differ.generate("src/test/resources/nestedfile1.json",
-                        "src/test/resources/nestedfile2.json",
-                        "json"));
+    public void testYMLCompareEmpty() throws Exception {
+        String actual = Differ.generate("./src/test/resources/file1.yml", "./src/test/resources/file2.yml");
+        String expected = fileToString("./src/test/resources/fixtures/resultTestStylish.txt");
+        assertEquals(actual, expected);
+    }
+    @Test
+    public void testYMLCompareStylish() throws Exception {
+        String actual = Differ.generate("./src/test/resources/file1.yml", "./src/test/resources/file2.yml",
+                "stylish");
+        String expected = fileToString("./src/test/resources/fixtures/resultTestStylish.txt");
+        assertEquals(actual, expected);
     }
 
     @Test
-    public void testGenerateNestedYamlStylish() throws Exception {
-        assertEquals(stylishCompareNestedFileContent,
-                Differ.generate("src/test/resources/nestedfile1.yaml",
-                        "src/test/resources/nestedfile2.yaml",
-                        "stylish"));
+    public void testYMLComparePlain() throws Exception {
+        String actual = Differ.generate("./src/test/resources/file1.yml",
+                "./src/test/resources/file2.yml", "plain");
+        String expected = fileToString("./src/test/resources/fixtures/resultTestPlain.txt");
+        assertEquals(actual, expected);
     }
 
     @Test
-    public void testGenerateNestedYamlPlain() throws Exception {
-        assertEquals(plainCompareNestedFileContent,
-                Differ.generate("src/test/resources/nestedfile1.yaml",
-                        "src/test/resources/nestedfile2.yaml",
-                        "plain"));
-    }
-
-    @Test
-    public void testGenerateNestedYamlAsJson() throws Exception {
-        assertEquals(asJsonCompareNestedFileContent,
-                Differ.generate("src/test/resources/nestedfile1.yaml",
-                        "src/test/resources/nestedfile2.yaml",
-                        "json"));
-    }
-
-    public static Path pathNormaliser(String pathToFile) {
-        return Path.of(pathToFile).toAbsolutePath().normalize();
+    public void testYMLCompareJson() throws Exception {
+        String actual = Differ.generate("./src/test/resources/file1.yml",
+                "./src/test/resources/file2.yml", "json");
+        String expected = fileToString("./src/test/resources/fixtures/resultTestJson.txt");
+        assertEquals(actual, expected);
     }
 }
