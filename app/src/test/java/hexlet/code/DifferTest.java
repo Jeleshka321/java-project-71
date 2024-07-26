@@ -38,7 +38,7 @@ public class DifferTest {
     public void testGenerateNestedYamlFilesDefaultFormat() throws Exception {
         assertEquals(stylishCompareNestedFileContent,
                 Differ.generate("src/test/resources/nestedfile1.yaml",
-                        "src/test/resources/nestedfile2.yaml","plain"));
+                        "src/test/resources/nestedfile2.yaml", "plain"));
     }
 
     @Test
