@@ -8,8 +8,12 @@ import java.util.Map;
 
 public class JsonFormatter {
     // returns json format as string
-    public static String format(List<Map<String, Object>> result) throws JsonProcessingException {
+    public static String format(List<Map<String, Object>> result)  {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(result);
+        try {
+            return objectMapper.writeValueAsString(result);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
