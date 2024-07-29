@@ -15,7 +15,7 @@ public class StyleFormat {
             case "stylish" -> StylishFormatter.format(compareResult);
             case "plain" -> PlainFormatter.format(compareResult);
             case "json" -> JsonFormatter.format(compareResult);
-            default -> throw new IllegalArgumentException("Unknown data extension:" + format);
+            default -> throw new RuntimeException("Unknown format of output");
         };
     }
 

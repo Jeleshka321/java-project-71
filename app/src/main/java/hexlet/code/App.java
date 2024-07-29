@@ -1,41 +1,47 @@
 package hexlet.code;
 
 import picocli.CommandLine;
-import picocli.CommandLine.Option;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
-
 import java.util.concurrent.Callable;
 
-@Command(name = "gendiff", description = "Compares two configuration files and shows a difference.")
-
-public class App implements Callable<Integer> {
-    @Option(names = {"-f", "--format"}, defaultValue = "stylish",
-            description = "output format [default: stylish]", paramLabel = "format")
-    private String format;
+@Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 1.0",
+        description = "Compares two configuration files and shows a difference.")
+class App implements Callable<Integer> {
+    @Parameters(index = "0", paramLabel = "filepath1", description = "path to first file")
+    private String path1;
+    @Parameters(index = "1", paramLabel = "filepath2", description = "path to second file")
+    private String path2;
+    @Option(names = {"-f", "--format"}, paramLabel = "format", defaultValue = "stylish",
+            description = "output format [default: stylish]")
+    private String extension;
     @Option(names = {"-h", "--help"}, usageHelp = true, description = "Show this help message and exit.")
-    private boolean helpRequested = false;
+    private boolean usageHelpRequested;
     @Option(names = {"-V", "--version"}, versionHelp = true, description = "Print version information and exit.")
-    private boolean versionInfoRequested = false;
+    private boolean versionInfoRequested;
 
-    @Parameters(index = "0", description = "path to first file",
-            paramLabel = "filepath1")
-    private String filepath1;
-
-    @Parameters(index = "1", description = "path to second file",
-            paramLabel = "filepath2")
-    private String filepath2;
-
-    public static void main(String[] args) {
-        System.exit(new CommandLine(new App()).execute(args));
+    private static final int SUCCESS_EXIT_CODE = 0;
+    private static final int ERROR_EXIT_CODE = 1;
+    @Override
+    public Integer call() {
+        try {
+            System.out.println(Differ.generate(path1, path2, extension));
+            return SUCCESS_EXIT_CODE;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            // Getting the actual cause of the exception
+            System.out.println(e.getCause());
+            return ERROR_EXIT_CODE;
+        }
     }
 
-    @Override
-    public Integer call() throws Exception {
-        System.out.println(Differ.generate(filepath1, filepath2, format));
-        return 0;
+    public static void main(String... args) {
+        int exitCode = new CommandLine(new App()).execute(args);
+        System.exit(exitCode);
     }
 }
+
 
 
 

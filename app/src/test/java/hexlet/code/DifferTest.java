@@ -1,78 +1,81 @@
 package hexlet.code;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static hexlet.code.Differ.generate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DifferTest {
-    public static String fileToString(String filePathString) throws IOException {
-        Path filePath = Paths.get(filePathString);
-        return Files.readString(filePath).trim();
+class DifferTest {
+    private static String stylishOutput;
+    private static String plainOutput;
+    private static String jsonOutput;
+    @BeforeAll
+    public static void setExpected() throws IOException {
+        stylishOutput = getOutput("src/test/resources/testStylishOutput.txt");
+        plainOutput = getOutput("src/test/resources/testPlainOutput.txt");
+        jsonOutput = getOutput("src/test/resources/resultForTest.json");
     }
 
-    @Test
-    public void testJsonCompareEmpty() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.json", "./src/test/resources/file2.json");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestStylish.txt");
-        assertEquals(actual, expected);
+    public static String getOutput(String path) throws IOException {
+        var absolutePath = Paths.get(path).toAbsolutePath().normalize();
+        return Files.readString(absolutePath).trim();
     }
 
-    @Test
-    public void testJsonCompareStylish() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.json", "./src/test/resources/file2.json",
-                "stylish");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestStylish.txt");
-        assertEquals(actual, expected);
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yml"})
+    public void testGenerateStylishWithJsonOrYamlInput(String fileExtension) throws Exception {
+        var str1 = "src/test/resources/file1." + fileExtension;
+        var str2 = "src/test/resources/file2." + fileExtension;
+        var format = "stylish";
+        var expected = stylishOutput;
+
+        var actual = generate(str1, str2, format);
+
+        assertEquals(expected, actual);
     }
 
-    @Test
-    public void testJsonComparePlain() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.json",
-                "./src/test/resources/file2.json", "plain");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestPlain.txt");
-        assertEquals(actual, expected);
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yml"})
+    public void testGeneratePlainWithJsonOrYamlInput(String fileExtension) throws Exception {
+        var str1 = "src/test/resources/file1." + fileExtension;
+        var str2 = "src/test/resources/file2." + fileExtension;
+        var format = "plain";
+        var expected = plainOutput;
+
+        var actual = generate(str1, str2, format);
+
+        assertEquals(expected, actual);
     }
 
-    @Test
-    public void testJsonCompareJson() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.json",
-                "./src/test/resources/file2.json", "json");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestJson.txt");
-        assertEquals(actual, expected);
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yml"})
+    public void testGenerateJsonWithJsonOrYamlInput(String fileExtension) throws Exception {
+        var str1 = "src/test/resources/file1." + fileExtension;
+        var str2 = "src/test/resources/file2." + fileExtension;
+        var format = "json";
+        var expected = jsonOutput;
+
+        var actual = generate(str1, str2, format);
+
+        assertEquals(expected, actual);
     }
 
-    @Test
-    public void testYMLCompareEmpty() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.yml", "./src/test/resources/file2.yml");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestStylish.txt");
-        assertEquals(actual, expected);
-    }
-    @Test
-    public void testYMLCompareStylish() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.yml", "./src/test/resources/file2.yml",
-                "stylish");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestStylish.txt");
-        assertEquals(actual, expected);
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yml"})
+    public void testGenerateDefaultWithJsonOrYamlInput(String fileExtension) throws Exception {
+        var str1 = "src/test/resources/file1." + fileExtension;
+        var str2 = "src/test/resources/file2." + fileExtension;
+        var expected = stylishOutput;
+
+        var actual = generate(str1, str2);
+
+        assertEquals(expected, actual);
     }
 
-    @Test
-    public void testYMLComparePlain() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.yml",
-                "./src/test/resources/file2.yml", "plain");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestPlain.txt");
-        assertEquals(actual, expected);
-    }
-
-    @Test
-    public void testYMLCompareJson() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.yml",
-                "./src/test/resources/file2.yml", "json");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestJson.txt");
-        assertEquals(actual, expected);
-    }
 }

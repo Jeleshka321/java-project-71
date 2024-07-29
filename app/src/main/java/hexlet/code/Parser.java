@@ -15,7 +15,7 @@ public class Parser {
         } else if ("yaml".equals(fileName) || "yml".equals(fileName)) {
             return parseYaml(content);
         } else {
-            throw new IllegalArgumentException("Unsupported file format: " + fileName);
+            throw new RuntimeException("Unknown format of file input");
         }
 
     }
