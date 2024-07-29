@@ -23,6 +23,10 @@ public class Differ {
         List<Map<String,Object>> compareResult = Comparator.compare(file1,file2);
         return StyleFormat.format(compareResult, format);
     }
+
+    public static String generate(String path1, String path2) throws Exception {
+        return generate(path1, path2, "stylish");
+    }
     private static String readFile(String filePath) throws Exception  {
         Path path = Paths.get(filePath).toAbsolutePath().normalize();
         if (!Files.exists(path)) {
