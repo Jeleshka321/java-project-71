@@ -1,5 +1,6 @@
 package hexlet.code;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +9,8 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Comparator {
-    public static List<Map<String, Object>> compare(Map<String, Object> map1, Map<String, Object> map2) throws Exception {
+    public static List<Map<String, Object>> compare(Map<String, Object> map1, Map<String, Object> map2)
+            throws Exception {
         var difference = new ArrayList<Map<String, Object>>();
 
         var keys = new TreeSet<String>(map1.keySet());
