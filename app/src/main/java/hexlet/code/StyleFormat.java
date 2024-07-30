@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public class StyleFormat {
-    // transforms the result into the required format
     public static String format( List<Map<String, Object>> compareResult, String format)  {
         return switch (format) {
             case "stylish" -> StylishFormatter.format(compareResult);

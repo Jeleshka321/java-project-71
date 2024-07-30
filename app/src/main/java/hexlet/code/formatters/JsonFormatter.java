@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public class JsonFormatter {
-    // returns json format as string
     public static String format(List<Map<String, Object>> result)  {
         ObjectMapper objectMapper = new ObjectMapper();
         try {

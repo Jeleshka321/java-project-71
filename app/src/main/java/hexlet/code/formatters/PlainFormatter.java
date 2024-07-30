@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 public class PlainFormatter {
-    // returns plain format as string
     public static String format(List<Map<String, Object>> result) {
         StringBuilder plainFormat = new StringBuilder();
 
@@ -29,18 +28,16 @@ public class PlainFormatter {
         return plainFormat.toString().trim();
     }
 
-    // replace nested values with 'complex value'
     public static Object replaceWithComplexValue(Object obj) {
         if (obj == null || obj.equals("null")) {
             return null;
         } else if (obj instanceof List
                 || obj instanceof Map) {
-            return  "[complex value]";
+            return "[complex value]";
         } else if (obj instanceof String) {
-            return  "'" + obj + "'";
+            return "'" + obj + "'";
         }
 
         return obj;
-
     }
 }
