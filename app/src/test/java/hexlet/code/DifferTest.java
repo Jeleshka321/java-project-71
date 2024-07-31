@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DifferTest {
 
     private static final Path PATH_TO_STYLISH_RESULT_FILE = pathNormaliser(
-            "src/test/resources/nestedstylishresult.txt");
+            "src/test/resources/stylishParsingResult.txt");
     private static String stylishCompareFileContent;
     private static final Path PATH_TO_PLAIN_RESULT_FILE = pathNormaliser(
             "src/test/resources/plainParsingResult.txt");
