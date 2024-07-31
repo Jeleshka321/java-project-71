@@ -1,8 +1,8 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/MarieTask/java-project-71/workflows/hexlet-check/badge.svg)](https://github.com/Jeleshka321/java-project-71/actions)
 [![Java CI](https://github.com/MarieTask/java-project-71/actions/workflows/main.yml/badge.svg)](https://github.com/Jeleshka321/java-project-71/actions/workflows/main.yml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/008809d137859f906e03/maintainability)](https://codeclimate.com/github/Jeleshka321/java-project-71/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/008809d137859f906e03/test_coverage)](https://codeclimate.com/github/Jeleshka321/java-project-71/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/aa9042c618d8a99cdebd/maintainability)](https://codeclimate.com/github/Jeleshka321/java-project-71/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/aa9042c618d8a99cdebd/test_coverage)](https://codeclimate.com/github/Jeleshka321/java-project-71/test_coverage)
 
 
 This project compares two files. They parse and get the result as the difference between files in different formats.
