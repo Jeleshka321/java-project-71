@@ -19,11 +19,11 @@ public class Parser {
 
     public static Map<String, Object> parseYaml(String content) throws Exception {
         ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
-        return yamlMapper.readValue(content, new TypeReference<Map<String, Object>>() {});
+        return yamlMapper.readValue(content, new TypeReference<Map<String, Object>>() { });
     }
 
     public static Map<String, Object> parseJson(String content) throws Exception {
         ObjectMapper jsonMapper = new ObjectMapper();
-        return jsonMapper.readValue(content, new TypeReference<Map<String, Object>>() {});
+        return jsonMapper.readValue(content, new TypeReference<Map<String, Object>>() { });
     }
 }
