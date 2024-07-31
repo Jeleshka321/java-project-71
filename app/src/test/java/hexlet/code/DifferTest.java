@@ -11,21 +11,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
 
-    private static final Path pathToStylishResultFile = pathNormaliser(
+    private static final Path PATH_TO_STYLISH_RESULT_FILE = pathNormaliser(
             "src/test/resources/nestedstylishresult.txt");
     private static String stylishCompareFileContent;
-    private static final Path pathToPlainResultFile = pathNormaliser(
+    private static final Path PATH_TO_PLAIN_RESULT_FILE = pathNormaliser(
             "src/test/resources/plainParsingResult.txt");
     private static String plainCompareFileContent;
-    private static final Path pathToJsonResultFile = pathNormaliser(
+    private static final Path PATH_TO_JSON_RESULT_FILE = pathNormaliser(
             "src/test/resources/jsonParsingResult.txt");
     private static String asJsonCompareFileContent;
 
     @BeforeAll
     public static void fileReader() throws Exception {
-        stylishCompareFileContent = readString(pathToStylishResultFile);
-        plainCompareFileContent = readString(pathToPlainResultFile);
-        asJsonCompareFileContent = readString(pathToJsonResultFile);
+        stylishCompareFileContent = readString(PATH_TO_STYLISH_RESULT_FILE);
+        plainCompareFileContent = readString(PATH_TO_PLAIN_RESULT_FILE);
+        asJsonCompareFileContent = readString(PATH_TO_JSON_RESULT_FILE);
     }
 
     @Test
