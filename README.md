@@ -1,6 +1,6 @@
 ### Hexlet tests and linter status:
-[![Actions Status](https://github.com/MarieTask/java-project-71/workflows/hexlet-check/badge.svg)](https://github.com/Jeleshka321/java-project-71/actions)
-[![Java CI](https://github.com/MarieTask/java-project-71/actions/workflows/main.yml/badge.svg)](https://github.com/Jeleshka321/java-project-71/actions/workflows/main.yml)
+[![Actions Status](https://github.com/Jeleshka321/java-project-71/workflows/hexlet-check/badge.svg)](https://github.com/Jeleshka321/java-project-71/actions)
+[![Java CI](https://github.com/Jeleshka321/java-project-71/actions/workflows/main.yml/badge.svg)](https://github.com/Jeleshka321/java-project-71/actions/workflows/main.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/aa9042c618d8a99cdebd/maintainability)](https://codeclimate.com/github/Jeleshka321/java-project-71/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/aa9042c618d8a99cdebd/test_coverage)](https://codeclimate.com/github/Jeleshka321/java-project-71/test_coverage)
 
