@@ -1,80 +1,95 @@
 package hexlet.code;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import hexlet.code.Differ;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
-class DifferTest {
-    private static String expectedStylish;
-    private static String expectedPlain;
-    private static String expectedJson;
-    private static final String FILEPATH_PART = "src/test/resources/fixtures/";
+import java.nio.file.Path;
+
+import static java.nio.file.Files.readString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class DifferTest {
+
+    private static final Path pathToStylishResultFile = pathNormaliser(
+            "src/test/resources/nestedstylishresult.txt");
+    private static String stylishCompareFileContent;
+    private static final Path pathToPlainResultFile = pathNormaliser(
+            "src/test/resources/plainParsingResult.txt");
+    private static String plainCompareFileContent;
+    private static final Path pathToJsonResultFile = pathNormaliser(
+            "src/test/resources/jsonParsingResult.txt");
+    private static String asJsonCompareFileContent;
 
     @BeforeAll
-    public static void setUp() throws IOException {
-        expectedStylish = readFile(FILEPATH_PART + "expectedStylish");
-        expectedPlain = readFile(FILEPATH_PART + "expectedPlain");
-        expectedJson = String.valueOf(Files.readAllLines(Paths.get(FILEPATH_PART + "expected.json")));
-    }
-
-    private static String readFile(String filepath) throws IOException {
-        return Files.readString(Paths.get(filepath)).trim();
+    public static void fileReader() throws Exception {
+        stylishCompareFileContent = readString(pathToStylishResultFile);
+        plainCompareFileContent = readString(pathToPlainResultFile);
+        asJsonCompareFileContent = readString(pathToJsonResultFile);
     }
 
     @Test
-    public void testYamlStylishDiff() throws Exception {
-        String actual = Differ.generate(FILEPATH_PART + "file1.yml", FILEPATH_PART + "file2.yml", "stylish");
-        assertEquals(expectedStylish, actual);
+    public void testGenerateNestedJsonFilesDefaultFormat() throws Exception {
+        assertEquals(stylishCompareFileContent,
+                Differ.generate("src/test/resources/file1.json",
+                        "src/test/resources/file2.json"));
     }
 
     @Test
-    public void testJsonStylishDiff() throws Exception {
-        String actual = Differ.generate(FILEPATH_PART + "file3.json", FILEPATH_PART + "file4.json", "stylish");
-        assertEquals(expectedStylish, actual);
+    public void testGenerateNestedYamlFilesDefaultFormat() throws Exception {
+        assertEquals(plainCompareFileContent,
+                Differ.generate("src/test/resources/file1.yaml",
+                        "src/test/resources/file2.yaml"));
     }
 
     @Test
-    public void testJsonPlainDiff() throws Exception {
-        String actual = Differ.generate(FILEPATH_PART + "file3.json", FILEPATH_PART + "file4.json", "plain");
-        assertEquals(expectedPlain, actual);
+    public void testGenerateNestedJsonStylish() throws Exception {
+        assertEquals(stylishCompareFileContent,
+                Differ.generate("src/test/resources/file1.json",
+                        "src/test/resources/file2.json",
+                        "stylish"));
     }
 
     @Test
-    public void testYmlPlainDiff() throws Exception {
-        String actual = Differ.generate(FILEPATH_PART + "file1.yml", FILEPATH_PART + "file2.yml", "plain");
-        assertEquals(expectedPlain, actual);
+    public void testGenerateNestedJsonPlain() throws Exception {
+        assertEquals(plainCompareFileContent,
+                Differ.generate("src/test/resources/file1.json",
+                        "src/test/resources/file2.json",
+                        "plain"));
     }
 
     @Test
-    public void testJsonToJsonFormat() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        String actual = Differ.generate(FILEPATH_PART + "file3.json", FILEPATH_PART + "file4.json", "json");
-        assertEquals(mapper.readTree(expectedJson), mapper.readTree(actual));
+    public void testGenerateNestedJsonAsJson() throws Exception {
+        assertEquals(asJsonCompareFileContent,
+                Differ.generate("src/test/resources/file1.json",
+                        "src/test/resources/file2.json",
+                        "json"));
     }
 
     @Test
-    public void testYamlToJsonFormat() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        String actual = Differ.generate(FILEPATH_PART + "file1.yml", FILEPATH_PART + "file2.yml", "json");
-        assertEquals(mapper.readTree(expectedJson), mapper.readTree(actual));
+    public void testGenerateNestedYamlStylish() throws Exception {
+        assertEquals(stylishCompareFileContent,
+                Differ.generate("src/test/resources/file1.yaml",
+                        "src/test/resources/file2.yaml",
+                        "stylish"));
     }
 
     @Test
-    public void testJsonNoArgs() throws Exception {
-        String actual = Differ.generate(FILEPATH_PART + "file3.json", FILEPATH_PART + "file4.json");
-        assertEquals(expectedStylish, actual);
+    public void testGenerateNestedYamlPlain() throws Exception {
+        assertEquals(plainCompareFileContent,
+                Differ.generate("src/test/resources/file1.yaml",
+                        "src/test/resources/file2.yaml",
+                        "plain"));
     }
 
     @Test
-    public void testYamlNoArgs() throws Exception {
-        String actual = Differ.generate(FILEPATH_PART + "file1.yml", FILEPATH_PART + "file2.yml");
-        assertEquals(expectedStylish, actual);
+    public void testGenerateNestedYamlAsJson() throws Exception {
+        assertEquals(asJsonCompareFileContent,
+                Differ.generate("src/test/resources/file1.yaml",
+                        "src/test/resources/file2.yaml",
+                        "json"));
+    }
+
+    public static Path pathNormaliser(String pathToFile) {
+        return Path.of(pathToFile).toAbsolutePath().normalize();
     }
 }
