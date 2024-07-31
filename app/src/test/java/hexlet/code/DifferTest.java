@@ -1,78 +1,80 @@
 package hexlet.code;
 
-import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import hexlet.code.Differ;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 class DifferTest {
-    public static String fileToString(String filePathString) throws IOException {
-        Path filePath = Paths.get(filePathString);
-        return Files.readString(filePath).trim();
+    private static String expectedStylish;
+    private static String expectedPlain;
+    private static String expectedJson;
+    private static final String FILEPATH_PART = "src/test/resources/fixtures/";
+
+    @BeforeAll
+    public static void setUp() throws IOException {
+        expectedStylish = readFile(FILEPATH_PART + "expectedStylish");
+        expectedPlain = readFile(FILEPATH_PART + "expectedPlain");
+        expectedJson = String.valueOf(Files.readAllLines(Paths.get(FILEPATH_PART + "expected.json")));
+    }
+
+    private static String readFile(String filepath) throws IOException {
+        return Files.readString(Paths.get(filepath)).trim();
     }
 
     @Test
-    public void testJsonCompareEmpty() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.json", "./src/test/resources/file2.json");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestStylish.txt");
-        assertEquals(actual, expected);
+    public void testYamlStylishDiff() throws Exception {
+        String actual = Differ.generate(FILEPATH_PART + "file1.yml", FILEPATH_PART + "file2.yml", "stylish");
+        assertEquals(expectedStylish, actual);
     }
 
     @Test
-    public void testJsonCompareStylish() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.json", "./src/test/resources/file2.json",
-                "stylish");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestStylish.txt");
-        assertEquals(actual, expected);
+    public void testJsonStylishDiff() throws Exception {
+        String actual = Differ.generate(FILEPATH_PART + "file3.json", FILEPATH_PART + "file4.json", "stylish");
+        assertEquals(expectedStylish, actual);
     }
 
     @Test
-    public void testJsonComparePlain() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.json",
-                "./src/test/resources/file2.json", "plain");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestPlain.txt");
-        assertEquals(actual, expected);
+    public void testJsonPlainDiff() throws Exception {
+        String actual = Differ.generate(FILEPATH_PART + "file3.json", FILEPATH_PART + "file4.json", "plain");
+        assertEquals(expectedPlain, actual);
     }
 
     @Test
-    public void testJsonCompareJson() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.json",
-                "./src/test/resources/file2.json", "json");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestJson.txt");
-        assertEquals(actual, expected);
+    public void testYmlPlainDiff() throws Exception {
+        String actual = Differ.generate(FILEPATH_PART + "file1.yml", FILEPATH_PART + "file2.yml", "plain");
+        assertEquals(expectedPlain, actual);
     }
 
     @Test
-    public void testYMLCompareEmpty() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.yml", "./src/test/resources/file2.yml");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestStylish.txt");
-        assertEquals(actual, expected);
-    }
-    @Test
-    public void testYMLCompareStylish() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.yml", "./src/test/resources/file2.yml",
-                "stylish");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestStylish.txt");
-        assertEquals(actual, expected);
+    public void testJsonToJsonFormat() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String actual = Differ.generate(FILEPATH_PART + "file3.json", FILEPATH_PART + "file4.json", "json");
+        assertEquals(mapper.readTree(expectedJson), mapper.readTree(actual));
     }
 
     @Test
-    public void testYMLComparePlain() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.yml",
-                "./src/test/resources/file2.yml", "plain");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestPlain.txt");
-        assertEquals(actual, expected);
+    public void testYamlToJsonFormat() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String actual = Differ.generate(FILEPATH_PART + "file1.yml", FILEPATH_PART + "file2.yml", "json");
+        assertEquals(mapper.readTree(expectedJson), mapper.readTree(actual));
     }
 
     @Test
-    public void testYMLCompareJson() throws Exception {
-        String actual = Differ.generate("./src/test/resources/file1.yml",
-                "./src/test/resources/file2.yml", "json");
-        String expected = fileToString("./src/test/resources/fixtures/resultTestJson.txt");
-        assertEquals(actual, expected);
+    public void testJsonNoArgs() throws Exception {
+        String actual = Differ.generate(FILEPATH_PART + "file3.json", FILEPATH_PART + "file4.json");
+        assertEquals(expectedStylish, actual);
+    }
+
+    @Test
+    public void testYamlNoArgs() throws Exception {
+        String actual = Differ.generate(FILEPATH_PART + "file1.yml", FILEPATH_PART + "file2.yml");
+        assertEquals(expectedStylish, actual);
     }
 }
