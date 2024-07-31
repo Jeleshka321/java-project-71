@@ -6,6 +6,9 @@
 
 
 This project compares two files. They parse and get the result as the difference between files in different formats.
+
 Json Default: https://github.com/user-attachments/assets/cfcb0918-bd29-4c52-9375-de7a629be799
+
 Yml Default: https://github.com/user-attachments/assets/44e70f61-75eb-415e-bb16-d14b422c1b93
+
 Json plain
