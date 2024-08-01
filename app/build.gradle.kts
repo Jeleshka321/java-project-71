@@ -1,9 +1,13 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
     plugins {
     id("java")
-    application
-    checkstyle
-    jacoco
-    id("io.freefair.lombok") version "8.6"
+        application
+        jacoco
+        id("checkstyle")
+        id("io.freefair.lombok") version "8.6"
+        id("com.github.ben-manes.versions") version "0.50.0"
+        id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "hexlet.code"
@@ -23,6 +27,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("org.apache.commons:commons-lang3:3.14.0")
+    implementation("org.apache.commons:commons-collections4:4.4")
     implementation ("info.picocli:picocli:4.7.5")
     annotationProcessor("info.picocli:picocli-codegen:4.7.5")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
@@ -30,6 +35,16 @@ dependencies {
     implementation("commons-io:commons-io:2.7")
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
+    tasks.test {
+        useJUnitPlatform()
+        // https://technology.lastminute.com/junit5-kotlin-and-gradle-dsl/
+        testLogging {
+            exceptionFormat = TestExceptionFormat.FULL
+            events = mutableSetOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+            // showStackTraces = true
+            // showCauses = true
+            showStandardStreams = true
+        }
+    }
+
+    tasks.jacocoTestReport { reports { xml.required.set(true) } }
