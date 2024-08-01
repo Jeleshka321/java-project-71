@@ -7,8 +7,14 @@
 
 This project compares two files. They parse and get the result as the difference between files in different formats.
 
-Json Default: https://github.com/user-attachments/assets/cfcb0918-bd29-4c52-9375-de7a629be799
+Json Default: ![изображение](https://github.com/user-attachments/assets/cfcb0918-bd29-4c52-9375-de7a629be799)
 
-Yml Default: https://github.com/user-attachments/assets/44e70f61-75eb-415e-bb16-d14b422c1b93
+Yml Default: ![изображение](https://github.com/user-attachments/assets/44e70f61-75eb-415e-bb16-d14b422c1b93)
 
-Json plain
+Plain variant: ![изображение](https://github.com/user-attachments/assets/3ff15f3c-a4e5-42e0-a78a-08ff67128faf)
+
+Stylish variant: ![изображение](https://github.com/user-attachments/assets/8bc72321-2ea7-40ae-b76e-5726c5476954)
+
+Json variant: ![изображение](https://github.com/user-attachments/assets/eb0426a8-ffd8-44e7-947c-35961032dcb7)
+
+
