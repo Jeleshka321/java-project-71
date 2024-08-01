@@ -1,13 +1,13 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
-    plugins {
+plugins {
     id("java")
-        application
-        jacoco
-        id("checkstyle")
-        id("io.freefair.lombok") version "8.6"
-        id("com.github.ben-manes.versions") version "0.50.0"
-        id("com.github.johnrengelman.shadow") version "8.1.1"
+    application
+    jacoco
+    id("checkstyle")
+    id("io.freefair.lombok") version "8.6"
+    id("com.github.ben-manes.versions") version "0.50.0"
+
 }
 
 group = "hexlet.code"
@@ -35,16 +35,16 @@ dependencies {
     implementation("commons-io:commons-io:2.7")
 }
 
-    tasks.test {
-        useJUnitPlatform()
-        // https://technology.lastminute.com/junit5-kotlin-and-gradle-dsl/
-        testLogging {
-            exceptionFormat = TestExceptionFormat.FULL
-            events = mutableSetOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
-            // showStackTraces = true
-            // showCauses = true
-            showStandardStreams = true
-        }
+tasks.test {
+    useJUnitPlatform()
+    // https://technology.lastminute.com/junit5-kotlin-and-gradle-dsl/
+    testLogging {
+        exceptionFormat = TestExceptionFormat.FULL
+        events = mutableSetOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+        // showStackTraces = true
+        // showCauses = true
+        showStandardStreams = true
     }
+}
 
-    tasks.jacocoTestReport { reports { xml.required.set(true) } }
+tasks.jacocoTestReport { reports { xml.required.set(true) } }
