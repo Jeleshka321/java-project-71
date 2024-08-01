@@ -37,7 +37,7 @@ public class DifferTest {
 
     @Test
     public void testGenerateYamlFilesDefaultFormat() throws Exception {
-        assertEquals(plainCompareFileContent,
+        assertEquals(stylishCompareFileContent,
                 Differ.generate("src/test/resources/file1.yml",
                         "src/test/resources/file2.yml"));
     }
