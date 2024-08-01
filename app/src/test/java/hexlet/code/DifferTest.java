@@ -29,21 +29,21 @@ public class DifferTest {
     }
 
     @Test
-    public void testGenerateNestedJsonFilesDefaultFormat() throws Exception {
+    public void testGenerateJsonFilesDefaultFormat() throws Exception {
         assertEquals(stylishCompareFileContent,
                 Differ.generate("src/test/resources/file1.json",
                         "src/test/resources/file2.json"));
     }
 
     @Test
-    public void testGenerateNestedYamlFilesDefaultFormat() throws Exception {
+    public void testGenerateYamlFilesDefaultFormat() throws Exception {
         assertEquals(plainCompareFileContent,
-                Differ.generate("src/test/resources/file1.yaml",
-                        "src/test/resources/file2.yaml"));
+                Differ.generate("src/test/resources/file1.yml",
+                        "src/test/resources/file2.yml"));
     }
 
     @Test
-    public void testGenerateNestedJsonStylish() throws Exception {
+    public void testGenerateJsonStylish() throws Exception {
         assertEquals(stylishCompareFileContent,
                 Differ.generate("src/test/resources/file1.json",
                         "src/test/resources/file2.json",
@@ -51,7 +51,7 @@ public class DifferTest {
     }
 
     @Test
-    public void testGenerateNestedJsonPlain() throws Exception {
+    public void testGenerateJsonPlain() throws Exception {
         assertEquals(plainCompareFileContent,
                 Differ.generate("src/test/resources/file1.json",
                         "src/test/resources/file2.json",
@@ -59,7 +59,7 @@ public class DifferTest {
     }
 
     @Test
-    public void testGenerateNestedJsonAsJson() throws Exception {
+    public void testGenerateJsonAsJson() throws Exception {
         assertEquals(asJsonCompareFileContent,
                 Differ.generate("src/test/resources/file1.json",
                         "src/test/resources/file2.json",
@@ -67,26 +67,26 @@ public class DifferTest {
     }
 
     @Test
-    public void testGenerateNestedYamlStylish() throws Exception {
+    public void testGenerateYamlStylish() throws Exception {
         assertEquals(stylishCompareFileContent,
-                Differ.generate("src/test/resources/file1.yaml",
-                        "src/test/resources/file2.yaml",
+                Differ.generate("src/test/resources/file1.yml",
+                        "src/test/resources/file2.yml",
                         "stylish"));
     }
 
     @Test
-    public void testGenerateNestedYamlPlain() throws Exception {
+    public void testGenerateYamlPlain() throws Exception {
         assertEquals(plainCompareFileContent,
-                Differ.generate("src/test/resources/file1.yaml",
-                        "src/test/resources/file2.yaml",
+                Differ.generate("src/test/resources/file1.yml",
+                        "src/test/resources/file2.yml",
                         "plain"));
     }
 
     @Test
-    public void testGenerateNestedYamlAsJson() throws Exception {
+    public void testGenerateYamlAsJson() throws Exception {
         assertEquals(asJsonCompareFileContent,
-                Differ.generate("src/test/resources/file1.yaml",
-                        "src/test/resources/file2.yaml",
+                Differ.generate("src/test/resources/file1.yml",
+                        "src/test/resources/file2.yml",
                         "json"));
     }
 
