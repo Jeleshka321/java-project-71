@@ -30,11 +30,13 @@ public class Comparator {
                 infoAboutElement.put("status", "unchanged");
                 infoAboutElement.put("key", key);
                 infoAboutElement.put("value", map1.get(key));
-            } else {
+            } else if (!Objects.equals(map1.get(key), map2.get(key))) {
                 infoAboutElement.put("status", "updated");
                 infoAboutElement.put("key", key);
                 infoAboutElement.put("oldValue", map1.get(key));
                 infoAboutElement.put("newValue", map2.get(key));
+            } else {
+                throw new RuntimeException("Unknown key: " + key);
             }
 
             difference.add(infoAboutElement);

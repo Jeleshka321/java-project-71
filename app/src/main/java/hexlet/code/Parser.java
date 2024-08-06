@@ -7,13 +7,13 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 public class Parser {
 
-    public static Map<String, Object> parse(String content, String fileName) throws Exception {
-        if ("json".equals(fileName)) {
+    public static Map<String, Object> parse(String content, String format) throws Exception {
+        if ("json".equals(format)) {
             return parseJson(content);
-        } else if ("yaml".equals(fileName) || "yml".equals(fileName)) {
+        } else if ("yaml".equals(format) || "yml".equals(format)) {
             return parseYaml(content);
         } else {
-            throw new RuntimeException("Unknown format of file input");
+            throw new RuntimeException("Unknown format of file input" + format);
         }
     }
 
