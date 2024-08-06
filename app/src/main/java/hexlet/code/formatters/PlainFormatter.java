@@ -21,7 +21,7 @@ public class PlainFormatter {
                 case "unchanged" -> {
                     break;
                 }
-                default -> throw new RuntimeException("Unknown status");
+                default -> throw new RuntimeException("Unknown format of output: " + element);
             }
         });
 

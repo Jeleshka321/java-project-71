@@ -1,12 +1,13 @@
 package hexlet.code;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.nio.file.Path;
 
 import static java.nio.file.Files.readString;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
@@ -28,66 +29,41 @@ public class DifferTest {
         asJsonCompareFileContent = readString(PATH_TO_JSON_RESULT_FILE);
     }
 
-    @Test
-    public void testGenerateJsonFilesDefaultFormat() throws Exception {
-        assertEquals(stylishCompareFileContent,
-                Differ.generate("src/test/resources/file1.json",
-                        "src/test/resources/file2.json"));
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yml"})
+    public void testGenerateDefaultFormat(String format) throws Exception {
+        String filePath1 = pathNormaliser("src/test/resources/file1." + format).toString();
+        String filePath2 = pathNormaliser("src/test/resources/file2." + format).toString();
+        assertEquals(stylishCompareFileContent, Differ.generate(filePath1, filePath2));
     }
 
-    @Test
-    public void testGenerateYamlFilesDefaultFormat() throws Exception {
-        assertEquals(stylishCompareFileContent,
-                Differ.generate("src/test/resources/file1.yml",
-                        "src/test/resources/file2.yml"));
+    @ParameterizedTest
+    @CsvSource({
+            "json, stylish, stylishCompareFileContent",
+            "json, plain, plainCompareFileContent",
+            "json, json, asJsonCompareFileContent",
+            "yml, stylish, stylishCompareFileContent",
+            "yml, plain, plainCompareFileContent",
+            "yml, json, asJsonCompareFileContent"
+    })
+    public void testGenerateWithFormat(String format, String outputFormat, String expectedContentField) throws Exception {
+        String filePath1 = pathNormaliser("src/test/resources/file1." + format).toString();
+        String filePath2 = pathNormaliser("src/test/resources/file2." + format).toString();
+        String expectedContent = getExpectedContent(expectedContentField);
+        assertEquals(expectedContent, Differ.generate(filePath1, filePath2, outputFormat));
     }
 
-    @Test
-    public void testGenerateJsonStylish() throws Exception {
-        assertEquals(stylishCompareFileContent,
-                Differ.generate("src/test/resources/file1.json",
-                        "src/test/resources/file2.json",
-                        "stylish"));
-    }
-
-    @Test
-    public void testGenerateJsonPlain() throws Exception {
-        assertEquals(plainCompareFileContent,
-                Differ.generate("src/test/resources/file1.json",
-                        "src/test/resources/file2.json",
-                        "plain"));
-    }
-
-    @Test
-    public void testGenerateJsonAsJson() throws Exception {
-        assertEquals(asJsonCompareFileContent,
-                Differ.generate("src/test/resources/file1.json",
-                        "src/test/resources/file2.json",
-                        "json"));
-    }
-
-    @Test
-    public void testGenerateYamlStylish() throws Exception {
-        assertEquals(stylishCompareFileContent,
-                Differ.generate("src/test/resources/file1.yml",
-                        "src/test/resources/file2.yml",
-                        "stylish"));
-    }
-
-    @Test
-    public void testGenerateYamlPlain() throws Exception {
-        assertEquals(plainCompareFileContent,
-                Differ.generate("src/test/resources/file1.yml",
-                        "src/test/resources/file2.yml",
-                        "plain"));
-    }
-
-    @Test
-    public void testGenerateYamlAsJson() throws Exception {
-        assertEquals(asJsonCompareFileContent,
-                Differ.generate("src/test/resources/file1.yml",
-                        "src/test/resources/file2.yml",
-                        "json"));
+    private static String getExpectedContent(String contentField) {
+        switch (contentField) {
+            case "stylishCompareFileContent":
+                return stylishCompareFileContent;
+            case "plainCompareFileContent":
+                return plainCompareFileContent;
+            case "asJsonCompareFileContent":
+                return asJsonCompareFileContent;
+            default:
+                throw new IllegalArgumentException("Unknown content field: " + contentField);
+        }
     }
 
     public static Path pathNormaliser(String pathToFile) {
