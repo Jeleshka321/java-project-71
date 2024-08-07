@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import static java.nio.file.Files.readString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DifferTest {
+public final class DifferTest {
 
     private static final Path PATH_TO_STYLISH_RESULT_FILE = pathNormaliser(
             "src/test/resources/stylishParsingResult.txt");
@@ -31,7 +31,7 @@ public class DifferTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"json", "yml"})
-    public void testGenerateDefaultFormat(String format) throws Exception {
+    public  void testGenerateDefaultFormat(String format) throws Exception {
         String filePath1 = pathNormaliser("src/test/resources/file1." + format).toString();
         String filePath2 = pathNormaliser("src/test/resources/file2." + format).toString();
         assertEquals(stylishCompareFileContent, Differ.generate(filePath1, filePath2));
@@ -46,7 +46,7 @@ public class DifferTest {
             "yml, plain, plainCompareFileContent",
             "yml, json, asJsonCompareFileContent"
     })
-    public void testGenerateWithFormat(String format, String outputFormat, String expectedContentField) throws Exception {
+    public  void testGenerateWithFormat(String format, String outputFormat, String expectedContentField) throws Exception {
         String filePath1 = pathNormaliser("src/test/resources/file1." + format).toString();
         String filePath2 = pathNormaliser("src/test/resources/file2." + format).toString();
         String expectedContent = getExpectedContent(expectedContentField);
