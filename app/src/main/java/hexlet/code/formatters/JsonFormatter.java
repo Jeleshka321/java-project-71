@@ -9,6 +9,6 @@ import java.util.Map;
 public class JsonFormatter {
     public static String format(List<Map<String, Object>> result) throws  JsonProcessingException   {
         ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.writeValueAsString(result);
-        }
+        return objectMapper.writeValueAsString(result);
     }
+}
