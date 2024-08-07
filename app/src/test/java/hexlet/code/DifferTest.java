@@ -46,7 +46,8 @@ public final class DifferTest {
             "yml, plain, plainCompareFileContent",
             "yml, json, asJsonCompareFileContent"
     })
-    public  void testGenerateWithFormat(String format, String outputFormat, String expectedContentField) throws Exception {
+    public  void testGenerateWithFormat(String format, String outputFormat, String expectedContentField)
+            throws Exception {
         String filePath1 = pathNormaliser("src/test/resources/file1." + format).toString();
         String filePath2 = pathNormaliser("src/test/resources/file2." + format).toString();
         String expectedContent = getExpectedContent(expectedContentField);
