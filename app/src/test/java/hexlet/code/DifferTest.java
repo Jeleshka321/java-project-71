@@ -39,12 +39,12 @@ public final class DifferTest {
 
     @ParameterizedTest
     @CsvSource({
-            "json, stylish, stylishCompareFileContent",
-            "json, plain, plainCompareFileContent",
-            "json, json, asJsonCompareFileContent",
-            "yml, stylish, stylishCompareFileContent",
-            "yml, plain, plainCompareFileContent",
-            "yml, json, asJsonCompareFileContent"
+        "json, stylish, stylishCompareFileContent",
+        "json, plain, plainCompareFileContent",
+        "json, json, asJsonCompareFileContent",
+        "yml, stylish, stylishCompareFileContent",
+        "yml, plain, plainCompareFileContent",
+        "yml, json, asJsonCompareFileContent"
     })
     public  void testGenerateWithFormat(String format, String outputFormat, String expectedContentField)
             throws Exception {
